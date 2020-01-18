@@ -8,10 +8,10 @@
   },
   "installed_plugins": {
     "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "net.line72.montclair"
+      "PACKAGE_NAME": "com.gotransitapp.tuscaloosa"
     },
     "cordova-plugin-wkwebview-engine": {
-      "PACKAGE_NAME": "net.line72.montclair"
+      "PACKAGE_NAME": "com.gotransitapp.tuscaloosa"
     }
   },
   "dependent_plugins": {}

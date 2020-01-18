@@ -1,13 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="net.line72.montclair" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Montclair</name>
-    <description>
-        Birmingham, AL Realtime Bus Tracker.
-    </description>
+<widget xmlns="http://www.w3.org/ns/widgets" id="com.gotransitapp.tuscaloosa" version="1.4.4">
+    <name>Go Tuscaloosa</name>
+    <description>Real Time Tracking of the Buses for Tuscaloosa, AL</description>
     <author email="line72@line72.net" href="http://line72.net">
         Marcus Dillavou
     </author>
-    <content src="index.html" />
+    <content src="https://tuscaloosa.gotransitapp.com/index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
