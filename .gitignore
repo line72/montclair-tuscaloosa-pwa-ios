@@ -1,0 +1,6 @@
+/node_modules
+platforms/ios/Montclair.xcworkspace/xcuserdata/
+platforms/ios/CordovaLib/CordovaLib.xcodeproj/xcuserdata/
+platforms/ios/Montclair.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+
+*~

@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+#
+# This script decrypts all
+#  the encrypted provisioning profiles
+# Then it creates a new macos security
+#  keychain and installs the provisioning
+#  profiles
+#
+# It expects the following environment variables:
+#
+# - ENC_PASSWORD: The base64 encoded password to decrypt the encrypted profiles
+# - KEYCHAIN_PASSWORD: The password of the new keychain
+# - PROFILE_PASSWORD: The base64 password used when the profiles were exported
+#
+
+D=$(dirname $0)
+
+if [ -z $ENC_PASSWORD ]
+then
+    echo "Please set ENC_PASSWORD"
+    exit 1
+fi
+if [ -z $KEYCHAIN_PASSWORD ]
+then
+    echo "Please set KEYCHAIN_PASSWORD"
+    exit 1
+fi
+if [ -z $PROFILE_PASSWORD ]
+then
+    echo "Please set PROFILE_PASSWORD"
+    exit 1
+fi
+
+echo "$ENC_PASSWORD" | base64 -d - > ENC
+
+# Decrypt all the profiles
+for i in $D/profiles/*.enc
+do
+    openssl enc -aes-256-cbc -kfile ./ENC -in $i -d -a -out ${i%.enc}
+done
+ls -l $D/profiles/
+
+# Create a new keychain, set it as the default, and install the profiles
+security create-keychain -p "$KEYCHAIN_PASSWORD" ios-build.keychain
+security default-keychain -s ios-build.keychain
+# Unlock the keychain
+security unlock-keychain -p $KEYCHAIN_PASSWORD ios-build.keychain
+# Set keychain timeout to 1 hour for long builds
+# see here
+security set-keychain-settings -t 3600 -l ~/Library/Keychains/ios-build.keychain
+
+security import $D/profiles/AppleWWDRCA.cer -k ios-build.keychain -A
+security import $D/profiles/development-cert.cer -k ios-build.keychain -A
+security import $D/profiles/development-key.p12 -k ios-build.keychain -P "$(echo "$PROFILE_PASSWORD" | base64 -d -)" -A
+security import $D/profiles/distribution-cert.cer -k ios-build.keychain -A
+security import $D/profiles/distribution-key.p12 -k ios-build.keychain -P "$(echo "$PROFILE_PASSWORD" | base64 -d -)" -A
+# Fix for OS X Sierra that hungs in the codesign step
+security set-key-partition-list -S apple-tool:,apple: -s -k "$KEYCHAIN_PASSWORD" ios-build.keychain > /dev/null
+
+# Install provisioning profiles
+mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+cp $D/profiles/development-provisioning-profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
+cp $D/profiles/distribution-provisioning-profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
+

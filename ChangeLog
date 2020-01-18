@@ -1,0 +1,30 @@
+2.0.6 (7)
+2.0.5 (6)
+2.0.4 (5)
+==========
+2020-01-07  Marcus Dillavou  <line72@line72.net>
+	* ISSUE-4 - Fix Touch Issues on iOS 13
+
+2.0.3 (4)
+==========
+2020-01-02  Marcus Dillavou  <line72@line72.net>
+	* Only ignore top-level node_modules
+
+2.0.2 (3)
+==========
+2020-01-01  Marcus Dillavou  <line72@line72.net>
+	* ISSUE-1 - Add CI Support
+
+2.0.1 (2)
+==========
+2019-12-25  Marcus Dillavou  <line72@line72.net>
+	* Fixed landscape orientation and code signing
+
+2019-12-25  Marcus Dillavou  <line72@line72.net>
+	* Updated to latest build from pwabuilder.com
+
+1.0.0 (3)
+==========
+2018-07-28  Marcus Dillavou  <line72@line72.net>
+	* Initial Release
+
